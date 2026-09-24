@@ -33,7 +33,9 @@ The engine supports IP and CIDR whitelisting. By default, alerts involving trust
 
 The project follows a linear, decoupled defensive processing pipeline:
 
-<img src="docs/architecture.png" alt="SOC Log Analyzer Architecture" width="400">
+<div align="center">
+  <img src="docs/architecture.png" alt="SOC Log Analyzer Architecture" width="400">
+</div>
 
 1. **Ingestion & Normalization (`AuthLogParser`)**: Reads syslog-formatted lines, extracts timestamps, hostnames, processes, usernames, source IPs, and ports, and outputs structured `LogEvent` dataclasses.
 2. **Detection Engine (`SOCDetector`)**: Evaluates events chronologically across configurable sliding windows. Tracks authentication histories per IP and user session.
