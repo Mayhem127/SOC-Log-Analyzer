@@ -33,19 +33,7 @@ The engine supports IP and CIDR whitelisting. By default, alerts involving trust
 
 The project follows a linear, decoupled defensive processing pipeline:
 
-```
-Log File (auth.log)
-   ↓
-AuthLogParser
-   ↓ (Normalized LogEvents)
-SOCDetector
-   ↓ (Rule Evaluation)
-Alert Correlation
-   ↓ (Multi-Stage Alerts)
-SOCReporter
-   ↓
-Terminal Report + CSV Export
-```
+![SOC Log Analyzer Architecture](docs/architecture.png)
 
 1. **Ingestion & Normalization (`AuthLogParser`)**: Reads syslog-formatted lines, extracts timestamps, hostnames, processes, usernames, source IPs, and ports, and outputs structured `LogEvent` dataclasses.
 2. **Detection Engine (`SOCDetector`)**: Evaluates events chronologically across configurable sliding windows. Tracks authentication histories per IP and user session.
@@ -262,7 +250,7 @@ Some improvements I would like to add in the future include:
 
 Developed as part of a cybersecurity and SOC analysis portfolio demonstrating log parsing, threat detection engineering, and incident correlation.
 
-- **Author**: Nadya Roselani Bramanjaya (Dya) — Cybersecurity Student, Bina Nusantara University
+- **Author**: Nadya Roselani Bramanjaya — Cybersecurity Student, Bina Nusantara University
 - **GitHub**: [https://github.com/Mayhem127](https://github.com/Mayhem127)
 - **LinkedIn**: [https://www.linkedin.com/in/margareta-nadya](https://www.linkedin.com/in/margareta-nadya)
 
