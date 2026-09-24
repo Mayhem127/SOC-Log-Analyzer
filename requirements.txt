@@ -1,0 +1,5 @@
+# SOC Log Analyzer Dependencies
+# The core detection and reporting engine utilizes Python standard library exclusively.
+# Development & Testing dependencies:
+pytest>=7.0.0
+pytest-cov>=4.0.0
