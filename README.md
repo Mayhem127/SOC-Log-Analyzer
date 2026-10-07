@@ -167,33 +167,51 @@ Attacker IP: 203.0.113.42
           → Alert ALT-0005: [CRITICAL] SOC-RULE-004 (Suspicious Sudo Privilege Escalation)
 ```
 
-Running the analyzer against this sample data outputs the following summary:
+### Sample Output
+
+Run the analyzer against the sample log:
+
+```bash
+python main.py data/sample_auth.log --csv reports/cli_alerts.csv
+```
+
+**Executive summary**
+
+<p align="center">
+  <img src="docs/executive_summary.jpg" alt="Executive summary output" width="700">
+</p>
+
+**Correlated CRITICAL alerts** (brute-force → successful login → sudo escalation)
+
+```bash
+python main.py data/sample_auth.log -s CRITICAL
+```
+
+<p align="center">
+  <img src="docs/critical_alerts.jpg" alt="Critical alerts output" width="700">
+</p>
+
+<details>
+<summary><b>Other alerts (ALT-0001, ALT-0002)</b></summary>
 
 ```text
-================================================================================
-                  SOC LOG ANALYZER - SECURITY INCIDENT REPORT                   
-================================================================================
-[+] EXECUTIVE SUMMARY
---------------------------------------------------------------------------------
-  Total Events Analyzed : 30
-  Total Alerts Generated: 5
-  Unique Source IPs     : 2 (198.51.100.23, 203.0.113.42)
+[HIGH] ALT-0001 | SOC-RULE-001 | 2026-10-24 11:45:34
+  Rule Name   : SSH Brute-Force Attack Detected
+  Source IP   : 198.51.100.23 (Whitelisted: False)
+  Attempts    : 7
+  MITRE ATT&CK: T1110.001 - Password Guessing
+  Evidence    :
+    * Oct 24 11:45:10 prod-srv-01 sshd[16100]: Failed password for invalid user admin from 198.51.100.23 port 38201 ssh2
+    * ... (+6 additional log lines recorded)
 
-[+] ALERTS BY SEVERITY
---------------------------------------------------------------------------------
-  CRITICAL : 2
-  HIGH     : 3
-  MEDIUM   : 0
-  LOW      : 0
-
-[+] ALERTS BY RULE
---------------------------------------------------------------------------------
-  [SOC-RULE-001] SSH Brute-Force Attack Detected                    : 2
-  [SOC-RULE-002] SSH User Enumeration / Password Spraying           : 1
-  [SOC-RULE-003] Post-Brute-Force Successful Login (Potential Compromise) : 1
-  [SOC-RULE-004] Suspicious Sudo Privilege Escalation Post-Compromise : 1
-...
+[HIGH] ALT-0002 | SOC-RULE-002 | 2026-10-24 11:45:34
+  Rule Name   : SSH User Enumeration / Password Spraying
+  Source IP   : 198.51.100.23 (Whitelisted: False)
+  Attempts    : 7
+  MITRE ATT&CK: T1110.003 - Password Spraying / T1087.001 - Account Discovery
 ```
+
+</details>
 
 Each generated alert in the report and CSV contains the full list of evidence log lines showing exact timestamps and raw syslog strings.
 
